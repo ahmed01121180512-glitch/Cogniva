@@ -1,0 +1,11 @@
+{
+  "functions": {
+    "api/index.js": { "includeFiles": "{app.html,public/**}", "maxDuration": 30 }
+  },
+  "rewrites": [
+    { "source": "/auth/:provider/callback", "destination": "/api/index?__p=/auth/:provider/callback" },
+    { "source": "/auth/:provider", "destination": "/api/index?__p=/auth/:provider" },
+    { "source": "/api/:path*", "destination": "/api/index?__p=/api/:path*" },
+    { "source": "/app", "destination": "/api/index?__p=/app" }
+  ]
+}
