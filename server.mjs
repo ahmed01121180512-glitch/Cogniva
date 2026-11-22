@@ -517,3 +517,7 @@ export async function handle(req, res) {
 // `node server.mjs` starts a normal server; on Vercel the same handler is used by api/index.js instead.
 if (!process.env.VERCEL && process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.argv[1]))
   http.createServer(handle).listen(PORT, () => console.log('Cogniva on http://localhost:' + PORT));
+
+
+// Vercel may detect this module directly; expose its handler as the default export.
+export default handle;

@@ -75,9 +75,9 @@ Very long documents: the chat sends the parts of the document that match your qu
 The same code runs three ways: `node server.mjs` (SQLite file), Docker/Fly.io, or Vercel with Supabase Postgres.
 Setting `DATABASE_URL` switches the database to Postgres; tables are created automatically on the first request.
 
-1. **Supabase**: create a project, then *Connect* → copy the **Transaction pooler** string (port 6543). Replace `[YOUR-PASSWORD]`.
+1. **Supabase**: create a project, then *Connect* → choose **Transaction pooler** (Session/Transaction, port 6543) and copy the URI. Replace `[YOUR-PASSWORD]`. Avoid Direct connection for Vercel because it may require IPv6.
 2. **GitHub**: push this folder to a repository (`.env` is git-ignored; never upload it).
-3. **Vercel**: *Add New Project* → import the repo → framework "Other", no build command. Add the variables from `.env.example`
+3. **Vercel**: *Add New Project* → import the repo → framework "Other", no build command. Keep the project Root Directory at the repository root (the folder containing `vercel.json`). Add the variables from `.env.example`
    (`DATABASE_URL`, `NODE_ENV=production`, `TRUST_PROXY=1`, `SITE_URL`, `ADMIN_EMAIL`, `ADMIN_PASSWORD`, `AI_*`). Deploy.
 4. Set `SITE_URL` to the final address, and use `SITE_URL/auth/google/callback` and `SITE_URL/auth/github/callback` as the OAuth callback URLs.
 5. Open the site, sign in with `ADMIN_EMAIL`/`ADMIN_PASSWORD`, set the InstaPay handle and price in Administration.
@@ -86,4 +86,3 @@ Limits on Vercel: uploads are capped at about 4 MB (platform request limit); ffm
 scanned-PDF handling is reduced to what the built-in reader and the AI provider can do; the disk is not persistent (everything lives in Postgres).
 Supabase free projects pause after about a week without activity (open the dashboard to resume). Check both providers' current terms
 and free-tier limits, including whether your use is allowed on Vercel's free (Hobby) plan.
-# Cogniva

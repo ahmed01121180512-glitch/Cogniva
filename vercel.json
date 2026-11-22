@@ -1,6 +1,12 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "functions": { "api/index.js": { "maxDuration": 120, "memory": 1024, "includeFiles": "{app.html,public/**}" } },
+  "functions": {
+    "api/index.js": {
+      "maxDuration": 120,
+      "memory": 1024,
+      "includeFiles": "{app.html,public/**}"
+    }
+  },
   "redirects": [
     { "source": "/", "has": [{ "type": "cookie", "key": "sid" }], "destination": "/app", "permanent": false },
     { "source": "/index.html", "has": [{ "type": "cookie", "key": "sid" }], "destination": "/app", "permanent": false }
@@ -8,11 +14,13 @@
   "rewrites": [
     { "source": "/api/:path*", "destination": "/api/index" },
     { "source": "/auth/:path*", "destination": "/api/index" },
-    { "source": "/app", "destination": "/api/index" }
+    { "source": "/app", "destination": "/api/index" },
+    { "source": "/:path*", "destination": "/api/index" }
   ],
   "headers": [
     { "source": "/(.*)", "headers": [
       { "key": "Content-Security-Policy", "value": "default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'" },
-      { "key": "X-Content-Type-Options", "value": "nosniff" } ] }
+      { "key": "X-Content-Type-Options", "value": "nosniff" }
+    ] }
   ]
 }

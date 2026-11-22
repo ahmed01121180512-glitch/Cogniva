@@ -1,3 +1,6 @@
-// Vercel entry point: every dynamic request (/api/*, /auth/*, /app) is rewritten here (see vercel.json) and handled by the same code as `node server.mjs`.
+// Vercel Node.js Function entrypoint. All requests are handled by Cogniva's existing server handler.
 import { handle } from '../server.mjs';
-export default handle;
+
+export default function cogniva(req, res) {
+  return handle(req, res);
+}
