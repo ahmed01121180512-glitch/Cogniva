@@ -86,3 +86,4 @@ Limits on Vercel: uploads are capped at about 4 MB (platform request limit); ffm
 scanned-PDF handling is reduced to what the built-in reader and the AI provider can do; the disk is not persistent (everything lives in Postgres).
 Supabase free projects pause after about a week without activity (open the dashboard to resume). Check both providers' current terms
 and free-tier limits, including whether your use is allowed on Vercel's free (Hobby) plan.
+# Cogniva
