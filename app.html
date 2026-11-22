@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Cogniva</title>
+<style>
+:root{--bg:#0B1726;--bg2:#142B43;--sf:#14263A;--el:#20384F;--pr:#2563EB;--ac:#3B82F6;--cy:#38BDF8;--teal:#14B8A6;--tx:#F8FAFC;--tx2:#A8B7C8;--mu:#71849A;--bd:rgba(148,163,184,.16);--ok:#14B8A6;--er:#f87171;--g1:.46;--g2:.85}
+[data-theme=light]{--bg:#F5F8FC;--bg2:#E3ECF7;--sf:#fff;--el:#EEF3F9;--tx:#0B1726;--tx2:#44566b;--bd:rgba(11,23,38,.12);--g1:.24;--g2:.5}
+@property --ang{syntax:'<angle>';initial-value:0deg;inherits:false}
+*{box-sizing:border-box}
+body{margin:0;font:14px/1.6 Inter,"IBM Plex Sans Arabic",Cairo,system-ui,sans-serif;color:var(--tx);min-height:100vh;background:linear-gradient(135deg,var(--bg),var(--bg2)) fixed;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:-25%;z-index:-2;pointer-events:none;background:radial-gradient(600px 400px at 20% 25%,rgba(56,189,248,.17),transparent 70%),radial-gradient(700px 500px at 80% 70%,rgba(37,99,235,.19),transparent 70%),radial-gradient(500px 350px at 60% 10%,rgba(20,184,166,.11),transparent 70%);animation:drift 26s ease-in-out infinite alternate}
+body::after{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;background-image:linear-gradient(var(--bd) 1px,transparent 1px),linear-gradient(90deg,var(--bd) 1px,transparent 1px);background-size:56px 56px;opacity:.4;-webkit-mask-image:radial-gradient(ellipse at 50% 25%,#000,transparent 72%);mask-image:radial-gradient(ellipse at 50% 25%,#000,transparent 72%)}
+@keyframes drift{to{transform:translate3d(4%,3%,0) scale(1.08)}}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}}
+@keyframes spin{to{--ang:360deg}}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes fade{to{opacity:1}}
+@keyframes grow{from{transform:scaleY(0)}}
+@keyframes dashin{from{stroke-dasharray:0 100}}
+@keyframes fill{from{width:0}}
+@keyframes pulse{50%{box-shadow:0 0 0 6px rgba(56,189,248,0)}}
+.app{display:flex;min-height:100vh}
+aside{position:relative;width:226px;padding:22px 14px;display:flex;flex-direction:column;gap:4px;flex-shrink:0;background:linear-gradient(180deg,rgba(20,38,58,.55),transparent);backdrop-filter:blur(6px)}
+aside::after{content:'';position:absolute;inset-block:0;inset-inline-end:0;width:1px;background:linear-gradient(transparent,var(--cy),var(--pr),transparent);opacity:.55}
+.brand{font-size:22px;font-weight:700;letter-spacing:-.02em;padding:0 10px 6px;text-shadow:0 0 22px rgba(56,189,248,.45)}
+.logo{display:block;width:46px;height:46px;margin:0 10px 18px;filter:drop-shadow(0 0 10px rgba(56,189,248,.6));animation:glowpulse 4s ease-in-out infinite}
+@keyframes glowpulse{50%{filter:drop-shadow(0 0 18px rgba(56,189,248,.95))}}
+nav button{all:unset;display:block;width:100%;padding:9px 12px;border-radius:9px;color:var(--tx2);cursor:pointer;position:relative;transition:.2s}
+nav button:hover{background:var(--el);color:var(--tx);transform:translateX(3px)}
+[dir=rtl] nav button:hover{transform:translateX(-3px)}
+nav button.on{background:linear-gradient(90deg,rgba(56,189,248,.16),transparent);color:var(--cy);text-shadow:0 0 12px rgba(56,189,248,.6)}
+nav button.on::before{content:'';position:absolute;inset-block:8px;inset-inline-start:0;width:3px;border-radius:3px;background:var(--cy);box-shadow:0 0 12px var(--cy)}
+.ctl{margin-top:auto;display:flex;gap:6px;flex-wrap:wrap;padding:10px}
+main{flex:1;padding:30px 34px;max-width:1120px;min-width:0}
+main>*{animation:rise .6s cubic-bezier(.2,.7,.2,1) both}
+main>*:nth-child(2){animation-delay:.06s}main>*:nth-child(3){animation-delay:.12s}main>*:nth-child(4){animation-delay:.18s}main>*:nth-child(5){animation-delay:.24s}main>*:nth-child(n+6){animation-delay:.3s}
+h1{font-size:26px;margin:0 0 20px;font-weight:650;letter-spacing:-.01em}h2{font-size:15px;margin:26px 0 10px;color:var(--tx2);font-weight:600}
+h3{margin:0 0 12px;font-size:12px;color:var(--mu);font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+.btn{background:linear-gradient(90deg,var(--pr),var(--ac));color:#fff;border:0;padding:8px 15px;border-radius:9px;font:inherit;font-weight:550;cursor:pointer;transition:.2s}
+.btn:hover{box-shadow:0 0 22px rgba(56,189,248,.5);transform:translateY(-1px)}.btn:active{transform:none}.btn:disabled{opacity:.5;cursor:default;box-shadow:none}
+.btn.ghost{background:transparent;border:1px solid var(--bd);color:var(--tx2)}.btn.ghost:hover{color:var(--tx);background:var(--el);box-shadow:0 0 14px rgba(56,189,248,.25)}.btn.sm{padding:4px 10px;font-size:12px}
+input,select,textarea{width:100%;background:var(--sf);color:var(--tx);border:1px solid var(--bd);border-radius:9px;padding:9px 11px;font:inherit;transition:.2s}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--cy);box-shadow:0 0 0 3px rgba(56,189,248,.18),0 0 16px rgba(56,189,248,.25)}
+label{display:block;margin:12px 0 5px;color:var(--tx2);font-size:12.5px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px}
+.tiles>*{animation:rise .6s cubic-bezier(.2,.7,.2,1) both}
+.tiles>*:nth-child(2){animation-delay:.05s}.tiles>*:nth-child(3){animation-delay:.1s}.tiles>*:nth-child(4){animation-delay:.15s}.tiles>*:nth-child(5){animation-delay:.2s}.tiles>*:nth-child(6){animation-delay:.25s}.tiles>*:nth-child(n+7){animation-delay:.3s}
+/* neon panels: a blurred spinning gradient sits behind the card and glows out from its edges */
+.tile,.panel{position:relative;z-index:0;background:transparent;border:1px solid var(--bd);border-radius:14px;padding:16px;transition:transform .3s}
+.tile::after,.panel::after{content:'';position:absolute;inset:0;z-index:-1;border-radius:inherit;background:var(--sf)}
+.tile::before,.panel::before{content:'';position:absolute;inset:-2px;z-index:-2;border-radius:16px;background:conic-gradient(from var(--ang),var(--cy),var(--pr),var(--teal),var(--cy));filter:blur(17px);opacity:var(--g1);animation:spin 7s linear infinite;transition:opacity .3s}
+.tile:hover,.panel:hover{transform:translateY(-3px)}.tile:hover::before,.panel:hover::before{opacity:var(--g2)}
+.tile small{color:var(--mu)}.tile b{display:block;font-size:26px;margin-top:4px;letter-spacing:-.01em}
+.panel{padding:18px;margin-top:14px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:14px}.grid2>.panel{margin-top:14px}
+.bar{height:6px;background:var(--el);border-radius:4px;margin-top:10px;overflow:hidden}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--ac),var(--cy));box-shadow:0 0 10px var(--cy);animation:fill 1.1s cubic-bezier(.2,.7,.2,1) both}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.row>.grow{flex:1;min-width:140px}
+.list>div{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:11px 2px;border-bottom:1px solid var(--bd)}
+.chat{display:flex;flex-direction:column;gap:10px;margin-bottom:14px;max-height:56vh;overflow:auto}
+.msg{padding:10px 14px;border-radius:14px;max-width:85%;white-space:pre-wrap;overflow-wrap:anywhere;background:var(--sf);border:1px solid var(--bd);animation:rise .4s both}
+.msg.user{align-self:flex-end;background:linear-gradient(135deg,var(--pr),var(--ac));border-color:transparent;color:#fff;box-shadow:0 0 20px rgba(59,130,246,.35)}
+table{width:100%;border-collapse:collapse}th,td{text-align:start;padding:10px 8px;border-bottom:1px solid var(--bd);vertical-align:middle}th{color:var(--mu);font-weight:500;font-size:12px}
+tbody tr{transition:.2s}tbody tr:hover,table tr:hover td{background:rgba(56,189,248,.05)}
+.tw.panel{padding:8px 14px}@media(max-width:1000px){.tw{overflow-x:auto}}
+.q{background:var(--sf);border:1px solid var(--bd);border-radius:14px;padding:14px;margin-bottom:12px;animation:rise .5s both}.q label{display:flex;gap:8px;align-items:center;margin:6px 0;color:var(--tx);cursor:pointer}.q input{width:auto}
+.good{color:var(--ok)}.bad{color:var(--er)}.mu{color:var(--mu)}
+.badge{display:inline-block;padding:2px 10px;border-radius:99px;font-size:11.5px;border:1px solid var(--bd);color:var(--tx2)}.badge.pro{color:var(--cy);border-color:var(--cy);box-shadow:0 0 12px rgba(56,189,248,.35)}
+.tabs{display:flex;gap:4px;flex-wrap:wrap;margin:-6px 0 18px;border-bottom:1px solid var(--bd)}
+.tab{all:unset;cursor:pointer;padding:9px 15px;color:var(--tx2);border-bottom:2px solid transparent;transition:.2s}.tab:hover{color:var(--tx)}.tab:focus-visible{outline:2px solid var(--cy)}
+.tab.on{color:var(--cy);border-color:var(--cy);text-shadow:0 0 12px rgba(56,189,248,.6)}
+.chart{width:100%;height:auto;display:block;overflow:visible}.chart text{fill:var(--mu);font-size:10px}
+.ln{fill:none;stroke:var(--cy);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;animation:draw 1.5s ease forwards;filter:drop-shadow(0 0 6px var(--cy))}
+.area{opacity:0;animation:fade .9s .6s forwards}.dot{filter:drop-shadow(0 0 5px var(--cy))}
+.bx{transform-box:fill-box;transform-origin:50% 100%;animation:grow .8s cubic-bezier(.2,.8,.2,1) both;filter:drop-shadow(0 0 6px rgba(56,189,248,.55))}
+.dwrap{display:flex;gap:20px;align-items:center;flex-wrap:wrap}.donut{width:150px;height:150px;overflow:visible}
+.seg{fill:none;stroke-width:4.2;animation:dashin 1.1s cubic-bezier(.2,.7,.2,1) both;filter:drop-shadow(0 0 2.5px currentColor)}.dn{fill:var(--tx);font-size:7px;font-weight:700}
+.legend div{display:flex;align-items:center;gap:8px;margin:5px 0}.legend i{width:10px;height:10px;border-radius:50%;display:inline-block}
+.hb{display:grid;grid-template-columns:minmax(110px,220px) 1fr 40px;gap:12px;align-items:center;margin:9px 0}.hb .bar{margin:0}.hb span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.auth{max-width:380px;margin:9vh auto;padding:0 20px}.auth .brand{font-size:34px;padding:0 0 4px}
+#toast{position:fixed;inset-block-end:20px;inset-inline-end:20px;background:var(--el);border:1px solid var(--cy);box-shadow:0 0 22px rgba(56,189,248,.3);padding:11px 16px;border-radius:10px;opacity:0;transform:translateY(10px);transition:.25s;pointer-events:none;max-width:320px;z-index:20}#toast.on{opacity:1;transform:none}
+@media(max-width:760px){.logo{width:30px;height:30px;margin:0 8px}.app{flex-direction:column}aside{width:auto;flex-direction:row;flex-wrap:wrap;padding:10px}aside::after{display:none}.brand{padding:4px 8px}nav{display:flex;overflow-x:auto;width:100%}nav button{white-space:nowrap;width:auto}.ctl{margin:0}main{padding:20px 16px}.hb{grid-template-columns:90px 1fr 34px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;transition-duration:.01ms!important}}
+</style></head><body><div id="root"></div><div id="toast"></div>
+<script>
+const T={en:{dash:'Dashboard',chat:'Study assistant',docs:'Documents',exams:'Exams',billing:'Subscription',admin:'Administration',logout:'Sign out',selectAll:'Select all',premiumPlan:'Premium plan',perDays:'days',reqWeek:'AI requests / week',freeW:'Free',payHow:'How to subscribe',payStep1:'Send the amount through InstaPay to:',payStep2:'Type the transaction reference below and send the request.',payStep3:'We review it and activate Premium, and you get an email.',noPay:'Payments are not available yet. Please contact the administrator.',renew:'Renew Premium',pendingMsg:'Your request is being reviewed. Premium starts once it is approved.',cancelReq:'Cancel request',expiresIn:'Expires in',dayUnit:'days',expSoon:'Your Premium ends soon. Renew to keep the higher limit; the new days are added after the current ones.',expired:'Your Premium has ended. You are on the free plan.',st_pending:'Pending',st_approved:'Approved',st_rejected:'Rejected',st_cancelled:'Cancelled',refShort:'Enter the payment reference (at least 4 characters)',reasonQ:'Reason for rejecting (optional, shown to the student):',amount:'Amount',history:'Your requests',lbl_premium_currency:'Currency',sent:'Request sent. We will review it soon.',login:'Sign in',register:'Create account',name:'Full name',email:'Email',password:'Password (8+ characters)',role:'Role',student:'Student',teacher:'Teacher',send:'Send',ask:'Ask a question…',save:'Save',delete:'Delete',plan:'Plan',free:'Free',premium:'Premium',aiUsage:'AI requests this week',docsN:'Documents',examsN:'Exams taken',avgScore:'Average score',title:'Title',text:'Text or topic',generate:'Generate exam',take:'Start',submit:'Submit',score:'Score',ref:'Payment reference',requestPremium:'Request Premium',pending:'Pending',approve:'Approve',reject:'Reject',users:'Users',suspend:'Suspend',activate:'Reactivate',settings:'Settings',none:'Nothing here yet',welcome:'Welcome',tab_ov:'Overview',tab_usr:'Users & quotas',tab_pay:'Payments',tab_set:'Settings & audit',active7:'Active users (7d)',examsAll:'Exams taken',pendingPay:'Pending payments',revenue:'Revenue',signups14:'Sign-ups, last 14 days',aiDaily:'AI requests, last 14 days',byFeature:'AI usage by feature (30d)',byRole:'Users by role',topUsers:'Top users this week',usage7:'My AI usage, last 7 days',scores:'My exam scores',quota:'Weekly quota',used:'Used',setQ:'Set',defaultQ:'default',grant:'Grant Premium',revoke:'Set Free',search:'Search users…',exportCsv:'Export CSV',lbl_free_limit:'Free weekly limit',lbl_premium_limit:'Premium weekly limit',lbl_premium_days:'Premium duration (days)',lbl_premium_price:'Premium price',lbl_instapay_handle:'InstaPay handle',kind_chat:'Chat',kind_exam:'Exams',kind_cards:'Flashcards',courses:'Courses',join:'Join',create:'Create',code:'Code',assignments:'Assignments',description:'Description',submissions:'Submissions',grade:'Grade (0–100)',feedback:'Feedback',studentsN:'students',open:'Open',cards:'Flashcards',planner:'Study planner',front:'Front',back:'Back',add:'Add',show:'Show answer',again:'Again',hard:'Hard',good:'Good',easy:'Easy',due:'Due today',mastered:'Mastered',task:'Task',noDoc:'No document',file:'Text file (.txt, .md)',questions:'Questions',payments:'Payment requests',audit:'Audit log',upload:'Upload a file',uploadHint:'PDF, Word, PowerPoint, Excel, text/code, images, audio and video',uploading:'Reading the file… audio and video can take a few minutes',prepAudio:'Extracting the audio in your browser…',uploaded:'Added',preview:'Preview',hide:'Hide',tooBig:'File is larger than',decodeFail:'Your browser could not read the audio of this file.',tooLong:'Too long to convert in the browser. Install ffmpeg on the server or upload a shorter file.',pasteText:'Or paste text',rtlNote:'Added, but this Arabic PDF could only be read locally: word order may be off. Set AI_API_KEY or install pdftotext.',truncNote:'Added (very long file: only the first part was kept).',kind_upload:'File uploads',dk_text:'Text',dk_pdf:'PDF',dk_docx:'Word',dk_pptx:'PowerPoint',dk_xlsx:'Excel',dk_odf:'OpenDocument',dk_epub:'EPUB',dk_rtf:'RTF',dk_html:'HTML',dk_image:'Image',dk_audio:'Audio',dk_video:'Video'},
+ar:{dash:'لوحة التحكم',chat:'المساعد الدراسي',docs:'المستندات',exams:'الاختبارات',billing:'الاشتراك',admin:'الإدارة',logout:'تسجيل الخروج',selectAll:'تحديد الكل',premiumPlan:'الخطة المميزة',perDays:'يوم',reqWeek:'طلبات AI / أسبوع',freeW:'المجانية',payHow:'طريقة الاشتراك',payStep1:'حوّل المبلغ عبر إنستاباي إلى:',payStep2:'اكتب رقم مرجع العملية بالأسفل وأرسل الطلب.',payStep3:'نراجع الطلب ونفعّل الخطة المميزة وتصلك رسالة بالبريد.',noPay:'الدفع غير متاح حالياً. تواصل مع المسؤول.',renew:'تجديد الاشتراك',pendingMsg:'طلبك قيد المراجعة. تبدأ الخطة المميزة بعد الموافقة.',cancelReq:'إلغاء الطلب',expiresIn:'ينتهي بعد',dayUnit:'يوم',expSoon:'اشتراكك على وشك الانتهاء. جدّد للحفاظ على الحد الأعلى، وتُضاف الأيام الجديدة بعد الحالية.',expired:'انتهى اشتراكك المميز وأنت الآن على الخطة المجانية.',st_pending:'قيد المراجعة',st_approved:'مقبول',st_rejected:'مرفوض',st_cancelled:'ملغي',refShort:'اكتب رقم المرجع (4 أحرف على الأقل)',reasonQ:'سبب الرفض (اختياري، يظهر للطالب):',amount:'المبلغ',history:'طلباتك',lbl_premium_currency:'العملة',sent:'تم إرسال الطلب وسنراجعه قريباً.',login:'تسجيل الدخول',register:'إنشاء حساب',name:'الاسم الكامل',email:'البريد الإلكتروني',password:'كلمة المرور (8 أحرف فأكثر)',role:'الدور',student:'طالب',teacher:'معلم',send:'إرسال',ask:'اسأل سؤالاً…',save:'حفظ',delete:'حذف',plan:'الخطة',free:'مجانية',premium:'مميزة',aiUsage:'طلبات الذكاء الاصطناعي هذا الأسبوع',docsN:'المستندات',examsN:'الاختبارات المنجزة',avgScore:'متوسط الدرجات',title:'العنوان',text:'نص أو موضوع',generate:'إنشاء اختبار',take:'ابدأ',submit:'تسليم',score:'الدرجة',ref:'رقم مرجع الدفع',requestPremium:'طلب الاشتراك المميز',pending:'قيد المراجعة',approve:'قبول',reject:'رفض',users:'المستخدمون',suspend:'إيقاف',activate:'إعادة التفعيل',settings:'الإعدادات',none:'لا توجد بيانات بعد',welcome:'مرحباً',tab_ov:'نظرة عامة',tab_usr:'المستخدمون والحصص',tab_pay:'المدفوعات',tab_set:'الإعدادات والسجل',active7:'مستخدمون نشطون (7 أيام)',examsAll:'اختبارات منجزة',pendingPay:'مدفوعات معلّقة',revenue:'الإيرادات',signups14:'التسجيلات آخر 14 يوماً',aiDaily:'طلبات الذكاء الاصطناعي آخر 14 يوماً',byFeature:'الاستخدام حسب الميزة (30 يوماً)',byRole:'المستخدمون حسب الدور',topUsers:'الأكثر استخداماً هذا الأسبوع',usage7:'استخدامي آخر 7 أيام',scores:'درجات اختباراتي',quota:'الحصة الأسبوعية',used:'المستخدم',setQ:'تعيين',defaultQ:'الافتراضي',grant:'منح الاشتراك المميز',revoke:'إرجاع لمجاني',search:'ابحث عن مستخدم…',exportCsv:'تصدير CSV',lbl_free_limit:'حد الخطة المجانية أسبوعياً',lbl_premium_limit:'حد الخطة المميزة أسبوعياً',lbl_premium_days:'مدة الاشتراك (أيام)',lbl_premium_price:'سعر الاشتراك المميز',lbl_instapay_handle:'حساب InstaPay',kind_chat:'المحادثة',kind_exam:'الاختبارات',kind_cards:'البطاقات',courses:'المقررات',join:'انضمام',create:'إنشاء',code:'الرمز',assignments:'الواجبات',description:'الوصف',submissions:'التسليمات',grade:'الدرجة (0–100)',feedback:'ملاحظات',studentsN:'طالب',open:'فتح',cards:'البطاقات التعليمية',planner:'مخطط الدراسة',front:'الوجه الأمامي',back:'الوجه الخلفي',add:'إضافة',show:'إظهار الإجابة',again:'مرة أخرى',hard:'صعب',good:'جيد',easy:'سهل',due:'مستحقة اليوم',mastered:'متقنة',task:'المهمة',noDoc:'بدون مستند',file:'ملف نصي (.txt, .md)',questions:'الأسئلة',payments:'طلبات الدفع',audit:'سجل التدقيق',upload:'ارفع ملفاً',uploadHint:'PDF وWord وPowerPoint وExcel ونصوص وأكواد وصور وصوت وفيديو',uploading:'جارٍ قراءة الملف… الصوت والفيديو قد يستغرقان بضع دقائق',prepAudio:'جارٍ استخراج الصوت داخل المتصفح…',uploaded:'تمت الإضافة',preview:'معاينة',hide:'إخفاء',tooBig:'حجم الملف أكبر من',decodeFail:'تعذّر على المتصفح قراءة صوت هذا الملف.',tooLong:'الملف أطول من أن يُحوَّل في المتصفح. ثبّت ffmpeg على السيرفر أو ارفع ملفاً أقصر.',pasteText:'أو الصق نصاً',rtlNote:'تمت الإضافة، لكن هذا الـPDF العربي اتقرأ محلياً وممكن ترتيب الكلمات يبوظ. فعّل AI_API_KEY أو ثبّت pdftotext.',truncNote:'تمت الإضافة (الملف طويل جداً: اتحفظ أول جزء بس).',kind_upload:'رفع الملفات',dk_text:'نص',dk_pdf:'PDF',dk_docx:'Word',dk_pptx:'PowerPoint',dk_xlsx:'Excel',dk_odf:'OpenDocument',dk_epub:'EPUB',dk_rtf:'RTF',dk_html:'HTML',dk_image:'صورة',dk_audio:'صوت',dk_video:'فيديو'}};
+const S={me:null,lang:localStorage.lang||'en',theme:localStorage.theme||'dark',view:'dash'};
+const t=k=>T[S.lang][k]||k;
+const $=s=>document.querySelector(s);
+const h=(tag,a={},...k)=>{const e=document.createElement(tag);for(const[x,v]of Object.entries(a)){if(x.startsWith('on'))e.addEventListener(x.slice(2),v);else if(x==='class')e.className=v;else if(x==='value')e.value=v;else if(v!==false&&v!=null)e.setAttribute(x,v)}for(const c of k.flat())if(c!=null&&c!==false)e.append(c.nodeType?c:document.createTextNode(c));return e};
+const add=(el,...k)=>el.append(...k.flat().filter(c=>c!=null&&c!==false));   // like append, but skips the false/null left by `cond&&node`
+const api=async(p,m='GET',b)=>{const r=await fetch('/api/'+p,{method:m,headers:b?{'content-type':'application/json'}:{},body:b?JSON.stringify(b):undefined});const d=await r.json().catch(()=>({}));if(!r.ok)throw new Error(d.error||r.status);return d};
+let tt;const toast=(m,bad)=>{const e=$('#toast');e.textContent=m;e.style.color=bad?'var(--er)':'';e.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>e.classList.remove('on'),3500)};
+const act=fn=>async e=>{const b=e.currentTarget;b.disabled=true;try{await fn()}catch(x){toast(x.message,1)}finally{b.disabled=false}};
+const fmt=ts=>new Date(ts).toLocaleDateString(S.lang);const fmtU=ts=>new Date(ts).toLocaleDateString(S.lang,{timeZone:'UTC'});
+const html=x=>{const d=document.createElement('div');d.innerHTML=x;return d.firstElementChild};
+const NEON=['#38BDF8','#3B82F6','#14B8A6','#A78BFA','#F59E0B'],md=d=>/^\d{4}-/.test(d)?d.slice(5):d;let G=0;
+function countUp(el,to,suf=''){if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;const t0=performance.now();const f=n=>{const p=Math.min(1,(n-t0)/900),e=1-Math.pow(1-p,3);el.textContent=Math.round(to*e)+suf;if(p<1)requestAnimationFrame(f)};requestAnimationFrame(f)}
+const numEl=(to,suf='')=>{const b=h('b',{class:'num'},to+suf);countUp(b,Number(to)||0,suf);return b};
+const logo=()=>html(`<svg class="logo" viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="lgA" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#38BDF8"/><stop offset="1" stop-color="#2563EB"/></linearGradient></defs><path d="M48.85 17.86A22 22 0 1 0 48.85 46.14" fill="none" stroke="url(#lgA)" stroke-width="7" stroke-linecap="round"/><circle cx="46" cy="32" r="4.5" fill="#38BDF8"/></svg>`);
+const panel=(title,...k)=>h('div',{class:'panel'},h('h3',{},title),...k),grid2=(...k)=>h('div',{class:'grid2'},k);
+function lineChart(data,w=560,hh=190){if(!data.length)return h('div',{class:'mu'},t('none'));const id='g'+(++G),p=26,n=data.length,max=Math.max(1,...data.map(x=>x.c));
+ const X=i=>p+i*(w-2*p)/Math.max(1,n-1),Y=v=>hh-p-v/max*(hh-2*p),pts=data.map((x,i)=>[X(i),Y(x.c)]),path=pts.map((q,i)=>(i?'L':'M')+q[0].toFixed(1)+' '+q[1].toFixed(1)).join(' ');
+ const grid=[0,.5,1].map(f=>`<line x1="${p}" x2="${w-p}" y1="${Y(max*f)}" y2="${Y(max*f)}" stroke="var(--bd)"/><text x="4" y="${Y(max*f)+3}">${Math.round(max*f)}</text>`).join('');
+ const lab=[...new Set([0,Math.floor((n-1)/2),n-1])].map(i=>`<text x="${X(i)}" y="${hh-6}" text-anchor="middle">${md(data[i].d)}</text>`).join('');
+ const dots=pts.map((q,i)=>`<circle class="dot" cx="${q[0]}" cy="${q[1]}" r="3.6" fill="#38BDF8"><title>${md(data[i].d)}: ${data[i].c}</title></circle>`).join('');
+ return html(`<svg class="chart" viewBox="0 0 ${w} ${hh}"><defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#38BDF8" stop-opacity=".38"/><stop offset="1" stop-color="#38BDF8" stop-opacity="0"/></linearGradient></defs>${grid}<path class="area" d="${path} L${X(n-1)} ${hh-p} L${X(0)} ${hh-p}Z" fill="url(#${id})"/><path class="ln" pathLength="1" d="${path}"/>${dots}${lab}</svg>`)}
+function barChart(data,w=560,hh=190){const id='g'+(++G),p=26,n=data.length,max=Math.max(1,...data.map(x=>x.c)),bw=(w-2*p)/n;
+ const bars=data.map((x,i)=>{const bh=x.c/max*(hh-2*p);return `<rect class="bx" style="animation-delay:${i*45}ms" x="${p+i*bw+bw*.18}" y="${hh-p-bh}" width="${bw*.64}" height="${Math.max(bh,1.5)}" rx="3" fill="url(#${id})"><title>${md(x.d)}: ${x.c}</title></rect>`}).join('');
+ const grid=[0,.5,1].map(f=>`<line x1="${p}" x2="${w-p}" y1="${hh-p-f*(hh-2*p)}" y2="${hh-p-f*(hh-2*p)}" stroke="var(--bd)"/><text x="4" y="${hh-p-f*(hh-2*p)+3}">${Math.round(max*f)}</text>`).join('');
+ const lab=[0,n-1].map(i=>`<text x="${p+i*bw+bw/2}" y="${hh-6}" text-anchor="middle">${md(data[i].d)}</text>`).join('');
+ return html(`<svg class="chart" viewBox="0 0 ${w} ${hh}"><defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#38BDF8"/><stop offset="1" stop-color="#2563EB"/></linearGradient></defs>${grid}${bars}${lab}</svg>`)}
+function donut(items){const tot=items.reduce((a,x)=>a+x.v,0);if(!tot)return h('div',{class:'mu'},t('none'));let off=0;
+ const segs=items.map((x,i)=>{const pc=x.v/tot*100,c=NEON[i%NEON.length],r=`<circle class="seg" style="color:${c};animation-delay:${i*120}ms" cx="21" cy="21" r="15.9155" pathLength="100" stroke="${c}" stroke-dasharray="${pc} ${100-pc}" stroke-dashoffset="${-off}"><title>${x.v}</title></circle>`;off+=pc;return r}).join('');
+ return h('div',{class:'dwrap'},html(`<svg class="donut" viewBox="0 0 42 42"><g transform="rotate(-90 21 21)">${segs}</g><text x="21" y="23.4" text-anchor="middle" class="dn">${tot}</text></svg>`),
+  h('div',{class:'legend'},items.map((x,i)=>h('div',{},h('i',{style:`background:${NEON[i%NEON.length]};box-shadow:0 0 8px ${NEON[i%NEON.length]}`}),`${x.l} · ${x.v}`))))}
+function hbars(rows){if(!rows.length)return h('div',{class:'mu'},t('none'));const mx=Math.max(...rows.map(r=>r.c));
+ return h('div',{},rows.map(r=>h('div',{class:'hb'},h('span',{class:'mu'},r.email),h('div',{class:'bar'},h('i',{style:`width:${100*r.c/mx}%`})),h('b',{style:'font-size:14px'},r.c))))}
+function prefs(){const d=document.documentElement;d.dataset.theme=S.theme;d.lang=S.lang;d.dir=S.lang==='ar'?'rtl':'ltr'}
+async function refresh(){S.me=(await api('me')).user}
+async function boot(){try{await refresh();S.lang=S.me.lang;S.theme=S.me.theme}catch{S.me=null}prefs();render()}
+function render(){prefs();$('#root').replaceChildren(S.me?shell():authView())}
+function setPref(o){Object.assign(S,o);localStorage.lang=S.lang;localStorage.theme=S.theme;if(S.me)api('me','PATCH',{lang:S.lang,theme:S.theme}).catch(()=>{});render()}
+const ctl=()=>h('div',{class:'ctl'},h('button',{class:'btn ghost sm',onclick:()=>setPref({lang:S.lang==='en'?'ar':'en'})},S.lang==='en'?'العربية':'English'),h('button',{class:'btn ghost sm',onclick:()=>setPref({theme:S.theme==='dark'?'light':'dark'})},S.theme==='dark'?'Light':'Dark'));
+
+function authView(){let reg=false;const box=h('div',{class:'auth'});
+ const draw=()=>{const f={};const inp=(k,ty,ph)=>h('input',{type:ty,placeholder:ph,autocomplete:ty==='password'?(reg?'new-password':'current-password'):'on',oninput:e=>f[k]=e.target.value});
+  const role=h('select',{onchange:e=>f.role=e.target.value},h('option',{value:'student'},t('student')),h('option',{value:'teacher'},t('teacher')));f.role='student';
+  const go=act(async()=>{await api(reg?'register':'login','POST',reg?{name:f.name,email:f.email,password:f.password,role:f.role}:{email:f.email,password:f.password});await boot()});
+  box.replaceChildren(h('div',{class:'brand'},'Cogniva'),h('div',{class:'mu',style:'margin-bottom:18px'},reg?t('register'):t('login')),
+   reg&&h('div',{},h('label',{},t('name')),inp('name','text')),h('label',{},t('email')),inp('email','email'),h('label',{},t('password')),inp('password','password'),
+   reg&&h('div',{},h('label',{},t('role')),role),h('div',{class:'row',style:'margin-top:18px'},h('button',{class:'btn',onclick:go},reg?t('register'):t('login')),h('button',{class:'btn ghost',onclick:()=>{reg=!reg;draw()}},reg?t('login'):t('register'))),ctl())};
+ draw();return box}
+
+const views={dash,chat,docs,exams,cards:flashcards,planner,courses,billing,admin};
+function shell(){const items=['dash','chat','docs','exams','cards','planner',...(S.me.role!=='admin'?['courses']:[]),'billing',...(S.me.role==='admin'?['admin']:[])];const main=h('main');
+ const nav=h('nav',{},items.map(k=>h('button',{class:S.view===k?'on':'',onclick:()=>{S.view=k;S.course=null;render()}},t(k))));
+ views[S.view](main).catch(x=>{toast(x.message,1);main.append(h('div',{class:'mu'},x.message))});
+ return h('div',{class:'app'},h('aside',{},h('div',{class:'brand'},'Cogniva'),logo(),nav,ctl(),h('button',{class:'btn ghost sm',style:'margin:0 10px',onclick:async()=>{await api('logout','POST',{});S.me=null;location.replace('/index.html')}},t('logout'))),main)}
+
+async function dash(m){await refresh();const u=S.me,pc=Math.min(100,100*u.usage.used/Math.max(1,u.usage.limit)),ins=await api('insights').catch(()=>({usage:[],scores:[]}));
+ m.append(h('h1',{},`${t('welcome')}, ${u.name}`),h('div',{class:'tiles'},
+  h('div',{class:'tile'},h('small',{},t('plan')),h('b',{},t(u.plan)),u.plan==='premium'&&h('small',{},fmt(u.plan_expires))),
+  h('div',{class:'tile'},h('small',{},t('aiUsage')),numEl(u.usage.used,` / ${u.usage.limit}`),h('div',{class:'bar'},h('i',{style:`width:${pc}%`}))),
+  h('div',{class:'tile'},h('small',{},t('docsN')),numEl(u.stats.docs)),h('div',{class:'tile'},h('small',{},t('examsN')),numEl(u.stats.attempts)),
+  h('div',{class:'tile'},h('small',{},t('avgScore')),u.stats.attempts?numEl(u.stats.avg,'%'):h('b',{},'—')),h('div',{class:'tile'},h('small',{},t('due')),numEl(u.stats.due))),
+  grid2(panel(t('usage7'),ins.usage.length?barChart(ins.usage):h('div',{class:'mu'},t('none'))),panel(t('scores'),ins.scores.length?lineChart(ins.scores.map((c,i)=>({d:'#'+(i+1),c}))):h('div',{class:'mu'},t('none')))))}
+
+// Pick any number of documents (checkboxes). ids() -> array of chosen document ids.
+async function docPicker(){const{docs}=await api('docs');const boxes=docs.map(d=>({d,i:h('input',{type:'checkbox',style:'width:auto;margin:0'})}));
+ const lab='display:flex;gap:8px;align-items:center;margin:4px 0;color:var(--tx)';
+ const all=h('input',{type:'checkbox',style:'width:auto;margin:0',onchange:e=>boxes.forEach(x=>x.i.checked=e.target.checked)});
+ const el=h('div',{class:'q',style:'max-height:190px;overflow:auto;padding:8px 14px;margin:0'},docs.length?[boxes.length>1&&h('label',{style:lab+';color:var(--tx2)'},all,t('selectAll')),...boxes.map(x=>h('label',{style:lab},x.i,x.d.name))]:h('div',{class:'mu'},t('none')));
+ return{el,ids:()=>boxes.filter(x=>x.i.checked).map(x=>x.d.id)}}
+async function chat(m){const{messages}=await api('messages'),list=h('div',{class:'chat'}),pk=await docPicker(),ta=h('textarea',{rows:3,placeholder:t('ask')});
+ const add=(r,c)=>{list.append(h('div',{class:'msg '+r},c));list.scrollTop=1e9};messages.forEach(x=>add(x.role,x.content));
+ const send=act(async()=>{const v=ta.value.trim();if(!v)return;add('user',v);ta.value='';try{const r=await api('chat','POST',{message:v,docIds:pk.ids()});add('assistant',r.reply)}catch(x){list.lastChild.remove();ta.value=v;throw x}});
+ m.append(h('h1',{},t('chat')),list,h('div',{style:'margin-bottom:10px'},pk.el),h('div',{style:'margin:10px 0'},ta),h('button',{class:'btn',onclick:send},t('send')))}
+
+const MEDIA=/^(mp3|wav|m4a|aac|ogg|oga|opus|flac|wma|amr|aiff|aif|weba|mka|mpga|ac3|mp4|mov|mkv|avi|webm|wmv|flv|m4v|mpeg|mpg|3gp|mts|m2ts|ogv)$/;
+// Fallback when the server has no ffmpeg: decode the file's audio in the browser and send a small mono WAV instead of the whole video.
+async function toWav(f){
+ if(f.size>150e6)throw new Error(t('tooLong'));
+ const AC=window.AudioContext||window.webkitAudioContext,ac=new AC();let buf;
+ try{buf=await ac.decodeAudioData(await f.arrayBuffer())}catch{throw new Error(t('decodeFail'))}finally{ac.close()}
+ const rate=buf.duration>720?8000:16000;if(buf.duration*rate*2>24e6)throw new Error(t('tooLong'));
+ const off=new OfflineAudioContext(1,Math.max(1,Math.ceil(buf.duration*rate)),rate),src=off.createBufferSource();src.buffer=buf;src.connect(off.destination);src.start();
+ const pcm=(await off.startRendering()).getChannelData(0),dv=new DataView(new ArrayBuffer(44+pcm.length*2)),w=(o,x)=>[...x].forEach((c,i)=>dv.setUint8(o+i,c.charCodeAt(0)));
+ w(0,'RIFF');dv.setUint32(4,36+pcm.length*2,true);w(8,'WAVEfmt ');dv.setUint32(16,16,true);dv.setUint16(20,1,true);dv.setUint16(22,1,true);dv.setUint32(24,rate,true);dv.setUint32(28,rate*2,true);dv.setUint16(32,2,true);dv.setUint16(34,16,true);w(36,'data');dv.setUint32(40,pcm.length*2,true);
+ for(let i=0;i<pcm.length;i++)dv.setInt16(44+i*2,Math.max(-1,Math.min(1,pcm[i]))*32767,true);
+ return new Blob([dv],{type:'audio/wav'})}
+async function uploadFile(f,cp,say){
+ const max=cp.maxMB||50;if(f.size>max*1048576)throw new Error(`${t('tooBig')} ${max} MB`);
+ const ext=(f.name.split('.').pop()||'').toLowerCase();let body=f,name=f.name;
+ if((MEDIA.test(ext)||/^(audio|video)\//.test(f.type))&&cp.ffmpeg===false&&(!(cp.direct||[]).includes(ext)||f.size>(cp.directMB||24)*1048576)){say(t('prepAudio'));body=await toWav(f);name+='.wav'}
+ say(t('uploading'));
+ const r=await fetch('/api/docs/upload',{method:'POST',headers:{'x-filename':encodeURIComponent(name),'content-type':body.type||'application/octet-stream'},body});
+ const d=await r.json().catch(()=>({}));if(!r.ok)throw new Error(d.error||r.status);return d}
+async function docs(m){const[{docs},cp]=[await api('docs'),await api('docs/caps').catch(()=>({}))];let name='',text='';
+ const nameI=h('input',{placeholder:t('title'),oninput:e=>name=e.target.value}),ta=h('textarea',{rows:6,placeholder:t('text'),oninput:e=>text=e.target.value}),status=h('div',{class:'mu',style:'margin-top:8px'});
+ const file=h('input',{type:'file',multiple:'',onchange:async e=>{const inp=e.target,fs=[...inp.files];if(!fs.length)return;inp.disabled=true;let ok=0,note=null;const bad=[];
+  for(const[i,f]of fs.entries()){try{const r=await uploadFile(f,cp,x=>status.textContent=(fs.length>1?`(${i+1}/${fs.length}) ${f.name} — `:'')+x);ok++;note=r.note==='rtl'?'rtl':r.truncated&&note!=='rtl'?'trunc':note}catch(x){bad.push((fs.length>1?f.name+': ':'')+x.message)}}   // one bad file must not stop the rest
+  status.textContent='';inp.disabled=false;
+  if(bad.length){toast((ok?`${ok} ✓ · `:'')+bad.join(' | '),1);if(!ok)inp.value=''}else toast(note==='rtl'?t('rtlNote'):note==='trunc'?t('truncNote'):t('uploaded')+(ok>1?` (${ok})`:''),note==='rtl');
+  if(ok)render()}});
+ const row=d=>{const pre=h('pre',{style:'display:none;white-space:pre-wrap;overflow-wrap:anywhere;max-height:300px;overflow:auto;margin:8px 0 0;padding:10px;background:var(--sf);border:1px solid var(--bd);border-radius:9px;font:inherit;font-size:12.5px'});let loaded=false;
+  const pv=h('button',{class:'btn ghost sm',onclick:act(async()=>{if(pre.style.display==='block'){pre.style.display='none';pv.textContent=t('preview');return}
+   if(!loaded){const r=await api('docs/'+d.id);pre.textContent=r.text+(r.size>r.text.length?'\n…':'');loaded=true}pre.style.display='block';pv.textContent=t('hide')})},t('preview'));
+  return h('div',{style:'display:block'},h('div',{style:'display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap'},
+   h('span',{},d.name,' ',d.kind&&h('span',{class:'badge'},t('dk_'+d.kind)),' ',h('span',{class:'mu'},`· ${fmt(d.ts)} · ${Math.max(1,Math.round(d.size/1000))}k`)),
+   h('span',{class:'row'},pv,h('button',{class:'btn ghost sm',onclick:act(async()=>{await api('docs/'+d.id,'DELETE');render()})},t('delete')))),pre)};
+ m.append(h('h1',{},t('docs')),h('label',{},t('upload')),file,h('div',{class:'mu',style:'font-size:12px;margin-top:4px'},t('uploadHint')),status,
+  h('h2',{},t('pasteText')),h('label',{},t('title')),nameI,h('label',{},t('text')),ta,
+  h('div',{style:'margin-top:12px'},h('button',{class:'btn',onclick:act(async()=>{await api('docs','POST',{name,text});render()})},t('save'))),
+  h('div',{class:'list',style:'margin-top:22px'},docs.length?docs.map(row):h('div',{class:'mu'},t('none'))))}
+
+async function exams(m){const[{exams:ex},pk]=[await api('exams'),await docPicker()];let title='Exam',text='',n=5;
+ m.append(h('h1',{},t('exams')),h('div',{class:'row',style:'align-items:flex-start'},h('div',{class:'grow'},h('label',{},t('title')),h('input',{value:title,oninput:e=>title=e.target.value})),h('div',{class:'grow'},h('label',{},t('docs')),pk.el),h('div',{style:'width:90px'},h('label',{},t('questions')),h('input',{type:'number',min:3,max:10,value:5,oninput:e=>n=e.target.value}))),
+  h('label',{},t('text')),h('textarea',{rows:3,oninput:e=>text=e.target.value}),
+  h('div',{style:'margin-top:12px'},h('button',{class:'btn',onclick:act(async()=>{const r=await api('exams','POST',{title,n,text,docIds:pk.ids()});await refresh();takeExam(m,r.id)})},t('generate'))),
+  h('div',{class:'list',style:'margin-top:22px'},ex.length?ex.map(e=>h('div',{},h('span',{},e.title,' ',h('span',{class:'mu'},`· ${fmt(e.ts)}${e.best!=null?' · '+Math.round(e.best)+'%':''}`)),h('button',{class:'btn ghost sm',onclick:()=>takeExam(m,e.id)},t('take')))):h('div',{class:'mu'},t('none'))))}
+async function takeExam(m,id){const ex=await api('exams/'+id),ans=[];m.replaceChildren(h('h1',{},ex.title));
+ const cards=ex.questions.map((q,i)=>h('div',{class:'q'},h('b',{},`${i+1}. ${q.q}`),q.options.map((o,j)=>h('label',{},h('input',{type:'radio',name:'q'+i,onchange:()=>ans[i]=j}),o))));
+ m.append(...cards,h('button',{class:'btn',onclick:act(async()=>{const r=await api(`exams/${id}/submit`,'POST',{answers:ans});await refresh();
+  m.querySelector('button').remove();m.prepend(h('div',{class:'tile',style:'margin-bottom:14px'},h('small',{},t('score')),h('b',{},`${r.score} / ${r.total}`)));
+  cards.forEach((c,i)=>{const v=r.review[i];c.append(h('div',{class:v.correct?'good':'bad'},v.correct?'✓':`✗ → ${ex.questions[i].options[v.answer]}`),v.explanation&&h('div',{class:'mu'},v.explanation));c.querySelectorAll('input').forEach(x=>x.disabled=true)})})},t('submit')))}
+
+async function flashcards(m){const[d,pk]=[await api('cards'),await docPicker()];let f='',b='',n=8,tx='';
+ const queue=[...d.due],stage=h('div',{class:'q'});
+ const next=()=>{const c=queue[0];if(!c){stage.replaceChildren(h('div',{class:'mu'},d.cards.length?'✓ 0':t('none')));return}
+  stage.replaceChildren(h('div',{style:'font-size:17px;margin-bottom:12px'},c.front),h('button',{class:'btn',onclick:()=>{stage.replaceChildren(h('div',{class:'mu'},c.front),h('div',{style:'font-size:17px;margin:10px 0 14px'},c.back),
+   h('div',{class:'row'},[['again',1],['hard',3],['good',4],['easy',5]].map(([k,q])=>h('button',{class:'btn'+(q<3?' ghost':''),onclick:act(async()=>{await api(`cards/${c.id}/review`,'POST',{q});queue.shift();next()})},t(k)))))}},t('show')))};
+ next();
+ m.append(h('h1',{},t('cards')),h('div',{class:'tiles',style:'margin-bottom:14px'},h('div',{class:'tile'},h('small',{},t('due')),h('b',{},d.due.length)),h('div',{class:'tile'},h('small',{},t('mastered')),h('b',{},d.mastered))),stage,
+  h('h2',{},t('generate')),h('div',{class:'row'},h('div',{class:'grow'},pk.el),h('div',{class:'grow'},h('input',{placeholder:t('text'),oninput:e=>tx=e.target.value})),h('div',{style:'width:80px'},h('input',{type:'number',min:3,max:15,value:8,oninput:e=>n=e.target.value})),
+   h('button',{class:'btn',onclick:act(async()=>{await api('cards/generate','POST',{docIds:pk.ids(),text:tx||undefined,n});await refresh();render()})},t('generate'))),
+  h('h2',{},t('add')),h('div',{class:'row'},h('div',{class:'grow'},h('input',{placeholder:t('front'),oninput:e=>f=e.target.value})),h('div',{class:'grow'},h('input',{placeholder:t('back'),oninput:e=>b=e.target.value})),
+   h('button',{class:'btn',onclick:act(async()=>{await api('cards','POST',{front:f,back:b});await refresh();render()})},t('add'))),
+  h('div',{class:'list',style:'margin-top:18px'},d.cards.map(c=>h('div',{},h('span',{},c.front,' ',h('span',{class:'mu'},'→ '+c.back)),h('button',{class:'btn ghost sm',onclick:act(async()=>{await api('cards/'+c.id,'DELETE');render()})},t('delete'))))))}
+
+async function planner(m){const{tasks}=await api('tasks');let title='',due='';
+ m.append(h('h1',{},t('planner')),h('div',{class:'row'},h('div',{class:'grow'},h('input',{placeholder:t('task'),oninput:e=>title=e.target.value})),h('div',{style:'width:170px'},h('input',{type:'date',oninput:e=>due=e.target.value})),
+  h('button',{class:'btn',onclick:act(async()=>{await api('tasks','POST',{title,due:due?Date.parse(due):null});render()})},t('add'))),
+  h('div',{class:'list',style:'margin-top:18px'},tasks.length?tasks.map(k=>h('div',{},h('label',{style:'display:flex;gap:8px;align-items:center;margin:0;color:var(--tx)'},
+   h('input',{type:'checkbox',style:'width:auto',checked:k.done?'':null,onchange:act(async()=>{await api('tasks/'+k.id,'PATCH',{done:!k.done});render()})}),h('span',{style:k.done?'text-decoration:line-through;opacity:.6':''},k.title)),
+   h('span',{class:k.due&&!k.done&&k.due<Date.now()-864e5?'bad':'mu'},k.due?fmtU(k.due):''),h('button',{class:'btn ghost sm',onclick:act(async()=>{await api('tasks/'+k.id,'DELETE');render()})},t('delete')))):h('div',{class:'mu'},t('none'))))}
+
+async function courses(m){if(S.course)return openCourse(m);
+ const{courses:cs}=await api('courses'),teacher=S.me.role==='teacher';let v='';
+ add(m,h('h1',{},t('courses')),S.me.role!=='admin'&&h('div',{class:'row'},h('div',{class:'grow'},h('input',{placeholder:teacher?t('title'):t('code'),oninput:e=>v=e.target.value})),
+  h('button',{class:'btn',onclick:act(async()=>{teacher?await api('courses','POST',{title:v}):await api('courses/join','POST',{code:v});render()})},teacher?t('create'):t('join'))),
+  h('div',{class:'list',style:'margin-top:18px'},cs.length?cs.map(c=>h('div',{},h('span',{},c.title,c.code&&h('span',{class:'mu'},` · ${t('code')}: ${c.code} · ${c.students} ${t('studentsN')}`)),
+   h('button',{class:'btn ghost sm',onclick:()=>{S.course=c.id;render()}},t('open')))):h('div',{class:'mu'},t('none'))))}
+async function openCourse(m){const d=await api('courses/'+S.course),T_=d.teacher;let a={title:'',description:'',due:''};
+ add(m,h('button',{class:'btn ghost sm',onclick:()=>{S.course=null;render()}},'←'),h('h1',{style:'margin-top:12px'},d.course.title),
+  T_&&h('div',{class:'mu'},`${t('code')}: ${d.course.code} · ${d.students.length} ${t('studentsN')}`),
+  T_&&h('div',{},h('h2',{},t('assignments')),h('input',{placeholder:t('title'),oninput:e=>a.title=e.target.value}),h('textarea',{rows:3,style:'margin-top:8px',placeholder:t('description'),oninput:e=>a.description=e.target.value}),
+   h('div',{class:'row',style:'margin-top:8px'},h('div',{style:'width:170px'},h('input',{type:'date',oninput:e=>a.due=e.target.value})),h('button',{class:'btn',onclick:act(async()=>{await api(`courses/${S.course}/assignments`,'POST',{title:a.title,description:a.description,due:a.due?Date.parse(a.due):null});render()})},t('add')))),
+  !T_&&h('h2',{},t('assignments')),h('div',{style:'margin-top:14px'},d.assignments.length?d.assignments.map(x=>T_?teacherRow(x):studentRow(x)):h('div',{class:'mu'},t('none'))))}
+function teacherRow(x){const panel=h('div');
+ return h('div',{class:'q'},h('b',{},x.title),x.description&&h('div',{class:'mu',style:'white-space:pre-wrap'},x.description),
+  h('div',{class:'mu'},`${x.due?fmtU(x.due)+' · ':''}${x.subs} ${t('submissions')}${x.avg!=null?' · '+t('avgScore')+': '+x.avg:''}`),
+  h('button',{class:'btn ghost sm',style:'margin-top:8px',onclick:act(async()=>{const{submissions}=await api(`assignments/${x.id}/submissions`);
+   panel.replaceChildren(...(submissions.length?submissions.map(s=>{let g=s.grade??'',f=s.feedback||'';return h('div',{style:'border-top:1px solid var(--bd);margin-top:10px;padding-top:10px'},h('b',{},s.name),h('div',{style:'white-space:pre-wrap;margin:6px 0'},s.text),
+    h('div',{class:'row'},h('div',{style:'width:110px'},h('input',{type:'number',min:0,max:100,placeholder:t('grade'),value:g,oninput:e=>g=e.target.value})),h('div',{class:'grow'},h('input',{placeholder:t('feedback'),value:f,oninput:e=>f=e.target.value})),
+     h('button',{class:'btn sm',onclick:act(async()=>{await api(`submissions/${s.id}/grade`,'POST',{grade:Number(g),feedback:f});toast('OK')})},t('save'))))}):[h('div',{class:'mu'},t('none'))]))})},t('submissions')),panel)}
+function studentRow(x){let txt=x.text||'';const graded=x.grade!=null;
+ return h('div',{class:'q'},h('b',{},x.title),x.description&&h('div',{class:'mu',style:'white-space:pre-wrap'},x.description),x.due&&h('div',{class:'mu'},fmtU(x.due)),
+  h('textarea',{rows:3,style:'margin-top:8px',disabled:graded?'':null,oninput:e=>txt=e.target.value,value:txt}),
+  graded?h('div',{class:'good',style:'margin-top:8px'},`${t('grade')}: ${x.grade}`,x.feedback?` — ${x.feedback}`:''):h('button',{class:'btn',style:'margin-top:8px',onclick:act(async()=>{await api(`assignments/${x.id}/submit`,'POST',{text:txt});toast('OK')})},t('submit')))}
+
+async function billing(m){await refresh();const{payments}=await api('payments');let ref='';const u=S.me,pr=u.pricing,prem=u.plan==='premium';
+ const left=prem?Math.max(0,Math.ceil((u.plan_expires-Date.now())/864e5)):0,pend=payments.find(p=>p.status==='pending');
+ const money=n=>n?`${n} ${pr.currency}`:t('free'),stLabel=p=>t('st_'+p.status);
+ const refI=h('input',{value:'',oninput:e=>ref=e.target.value.trim(),disabled:pend?'':null});
+ const form=!u.instapay?h('div',{class:'mu',style:'margin-top:14px'},t('noPay')):pend
+  ?h('div',{class:'panel',style:'margin-top:14px'},h('div',{},t('pendingMsg')),h('div',{class:'mu',style:'margin:6px 0 10px'},pend.ref),h('button',{class:'btn ghost sm',onclick:act(async()=>{await api('payments/'+pend.id,'DELETE');render()})},t('cancelReq')))
+  :h('div',{class:'panel',style:'margin-top:14px'},h('h3',{},t('payHow')),
+    h('ol',{style:'margin:8px 0 14px;padding-inline-start:20px;line-height:1.9'},h('li',{},t('payStep1'),' ',h('b',{},u.instapay),pr.price?h('span',{class:'mu'},` (${money(pr.price)})`):null),h('li',{},t('payStep2')),h('li',{},t('payStep3'))),
+    h('label',{},t('ref')),refI,
+    h('div',{style:'margin-top:12px'},h('button',{class:'btn',onclick:act(async()=>{if(ref.length<4)throw new Error(t('refShort'));await api('payments','POST',{ref});toast(t('sent'));render()})},prem?t('renew'):t('requestPremium'))));
+ add(m,h('h1',{},t('billing')),
+  h('div',{class:'tiles'},
+   h('div',{class:'tile'},h('small',{},t('plan')),h('b',{},t(u.plan)),prem&&h('small',{},`${fmt(u.plan_expires)} · ${t('expiresIn')} ${left} ${t('dayUnit')}`)),
+   h('div',{class:'tile'},h('small',{},t('premiumPlan')),h('b',{},money(pr.price)),h('small',{},`${pr.days} ${t('perDays')}`)),
+   h('div',{class:'tile'},h('small',{},t('reqWeek')),h('b',{},`${pr.limit}`),h('small',{},`${t('freeW')}: ${pr.free_limit}`))),
+  prem&&left<=3&&h('div',{class:'bad',style:'margin-top:14px'},t('expSoon')),
+  !prem&&u.plan_expires>0&&h('div',{class:'mu',style:'margin-top:14px'},t('expired')),
+  form,
+  payments.length>0&&h('h2',{style:'margin-top:22px'},t('history')),
+  h('div',{class:'list'},payments.map(p=>h('div',{},h('span',{},p.ref,p.amount?h('span',{class:'mu'},` · ${money(p.amount)}`):null,p.status==='rejected'&&p.note?h('div',{class:'bad',style:'font-size:13px'},p.note):null),
+   h('span',{class:'mu'},h('span',{class:'badge'+(p.status==='approved'?' pro':'')},stLabel(p)),` · ${fmt(p.ts)}`)))))}
+
+async function admin(m){const tabs=['ov','usr','pay','set'];if(!tabs.includes(S.atab))S.atab='ov';const body=h('div');
+ m.append(h('h1',{},t('admin')),h('div',{class:'tabs'},tabs.map(k=>h('button',{class:'tab'+(S.atab===k?' on':''),onclick:()=>{S.atab=k;render()}},t('tab_'+k)))),body);
+ await({ov:adminOv,usr:adminUsers,pay:adminPay,set:adminSet})[S.atab](body)}
+async function adminOv(b){const[s,a]=await Promise.all([api('admin/stats'),api('admin/analytics')]),T_=a.totals,K=(l,v,suf)=>h('div',{class:'tile'},h('small',{},l),numEl(v,suf));
+ const kind=k=>t('kind_'+k)===('kind_'+k)?k:t('kind_'+k);
+ b.append(h('div',{class:'tiles'},K(t('users'),s.users),K(t('teacher'),s.teachers),K(t('premium'),s.premium),K(t('active7'),T_.active7),K(t('aiUsage'),s.ai7d),K(t('docsN'),s.docs),
+   K(t('examsAll'),T_.exams),K(t('avgScore'),T_.avg,'%'),K(t('cards'),T_.cards),K(t('courses'),T_.courses),K(t('pendingPay'),T_.pending),K(t('revenue'),T_.revenue)),
+  grid2(panel(t('signups14'),lineChart(a.signups)),panel(t('aiDaily'),barChart(a.ai))),
+  grid2(panel(t('byFeature'),donut(a.byKind.map(x=>({l:kind(x.kind),v:x.c})))),panel(t('byRole'),donut(a.byRole.map(x=>({l:t(x.role),v:x.c}))))),
+  panel(t('topUsers'),hbars(a.top)))}
+function csv(rows){const esc=v=>{let x=String(v??'');if(/^[=+\-@]/.test(x))x="'"+x;return '"'+x.replace(/"/g,'""')+'"'};
+ const txt=['name,email,role,plan,status,used_7d,quota',...rows.map(u=>[u.name,u.email,u.role,u.plan,u.status,u.used,u.quota].map(esc).join(','))].join('\n');
+ const a=h('a',{href:URL.createObjectURL(new Blob(['\ufeff'+txt],{type:'text/csv'})),download:'cogniva-users.csv'});document.body.append(a);a.click();a.remove()}
+async function adminUsers(b){const[{users},s]=await Promise.all([api('admin/users'),api('admin/stats')]);let q='';const set=s.settings,tb=h('tbody');
+ const row=u=>{const prem=u.plan==='premium'&&u.plan_expires>Date.now(),lim=u.quota!=null?u.quota:Number(prem?set.premium_limit:set.free_limit);let qv=u.quota!=null?String(u.quota):'';
+  return h('tr',{},h('td',{},u.name),h('td',{class:'mu'},u.email),h('td',{},t(u.role)),h('td',{},h('span',{class:'badge'+(prem?' pro':'')},prem?t('premium'):t('free'))),
+   h('td',{style:'min-width:120px'},`${u.used} / ${lim}`,h('div',{class:'bar'},h('i',{style:`width:${Math.min(100,100*u.used/Math.max(1,lim))}%`}))),
+   h('td',{},h('div',{class:'row',style:'flex-wrap:nowrap'},h('input',{style:'width:96px',type:'number',min:0,placeholder:t('defaultQ'),value:qv,oninput:e=>qv=e.target.value}),
+    h('button',{class:'btn ghost sm',onclick:act(async()=>{await api(`admin/users/${u.id}/quota`,'POST',{limit:qv===''?null:Number(qv)});toast('OK');render()})},t('setQ')))),
+   h('td',{},h('button',{class:'btn ghost sm',onclick:act(async()=>{await api(`admin/users/${u.id}/plan`,'POST',{plan:prem?'free':'premium'});render()})},prem?t('revoke'):t('grant'))),
+   h('td',{},u.id!==S.me.id&&h('button',{class:'btn ghost sm',onclick:act(async()=>{await api(`admin/users/${u.id}/status`,'POST',{status:u.status==='active'?'suspended':'active'});render()})},u.status==='active'?t('suspend'):t('activate'))))};
+ const draw=()=>tb.replaceChildren(...users.filter(u=>(u.name+' '+u.email).toLowerCase().includes(q)).map(row));draw();
+ b.append(h('div',{class:'row',style:'margin-bottom:12px'},h('div',{class:'grow'},h('input',{placeholder:t('search'),oninput:e=>{q=e.target.value.toLowerCase();draw()}})),h('button',{class:'btn ghost sm',onclick:()=>csv(users)},t('exportCsv'))),
+  h('div',{class:'tw panel'},h('table',{},h('thead',{},h('tr',{},['name','email','role','plan','used','quota','',''].map(k=>h('th',{},k?t(k):'')))),tb)))}
+async function adminPay(b){const{payments}=await api('admin/payments'),cur=(await api('admin/stats')).settings.premium_currency;
+ b.append(h('div',{class:'tw panel'},h('table',{},payments.length?payments.map(p=>h('tr',{},h('td',{},p.email),h('td',{},p.ref),h('td',{},p.amount?`${p.amount} ${cur}`:'—'),h('td',{},h('span',{class:'badge'+(p.status==='approved'?' pro':'')},t('st_'+p.status))),h('td',{class:'mu'},fmt(p.ts)),
+  h('td',{},p.status==='pending'&&h('span',{class:'row'},h('button',{class:'btn sm',onclick:act(async()=>{await api(`admin/payments/${p.id}/approve`,'POST',{});render()})},t('approve')),
+   h('button',{class:'btn ghost sm',onclick:act(async()=>{const note=prompt(t('reasonQ'));if(note===null)return;await api(`admin/payments/${p.id}/reject`,'POST',{note});render()})},t('reject')))))):h('tr',{},h('td',{class:'mu'},t('none'))))))}
+async function adminSet(b){const s=await api('admin/stats'),cfg={...s.settings};
+ b.append(h('div',{class:'panel'},h('h3',{},t('settings')),h('div',{class:'tiles'},Object.keys(cfg).map(k=>h('div',{},h('label',{},t('lbl_'+k)),h('input',{value:cfg[k],oninput:e=>cfg[k]=e.target.value})))),
+   h('div',{style:'margin-top:14px'},h('button',{class:'btn',onclick:act(async()=>{await api('admin/settings','PUT',cfg);toast('OK')})},t('save')))),
+  h('div',{class:'panel'},h('h3',{},t('audit')),h('div',{class:'list'},s.audit.length?s.audit.map(a=>h('div',{},h('span',{},a.action,' · ',a.target),h('span',{class:'mu'},new Date(a.ts).toLocaleString(S.lang)))):h('div',{class:'mu'},t('none')))))}
+boot();
+</script></body></html>
